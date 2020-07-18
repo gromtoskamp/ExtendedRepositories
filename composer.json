@@ -1,0 +1,22 @@
+{
+  "name": "groskampweb/module-extendedrepositories",
+  "description": "",
+  "type": "magento2-module",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Mage2Gen",
+      "email": "info@mage2gen.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Groskampweb\\ExtendedRepositories\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
+}
