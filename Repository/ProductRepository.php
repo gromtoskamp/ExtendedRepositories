@@ -8,10 +8,14 @@ use Magento\Catalog\Api\ProductAttributeRepositoryInterface;
 use Magento\Catalog\Controller\Adminhtml\Product\Initialization\Helper;
 use Magento\Catalog\Model\Category;
 use Magento\Catalog\Model\CategoryRepository;
-use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Gallery\MimeTypeExtensionMap;
+use Magento\Catalog\Model\Product\Initialization\Helper\ProductLinks;
+use Magento\Catalog\Model\Product\LinkTypeProvider;
+use Magento\Catalog\Model\Product\Option\Converter;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Catalog\Model\ProductRepository as MagentoProductRepository;
+use Magento\Catalog\Model\ResourceModel\Product;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Framework\Api\Data\ImageContentInterfaceFactory;
 use Magento\Framework\Api\ExtensibleDataObjectConverter;
 use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
@@ -31,33 +35,62 @@ class ProductRepository extends MagentoProductRepository
     /** @var CategoryRepository */
     private $categoryRepository;
 
+    /**
+     * ProductRepository constructor.
+     * @param ProductFactory $productFactory
+     * @param Helper $initializationHelper
+     * @param ProductSearchResultsInterfaceFactory $searchResultsFactory
+     * @param CollectionFactory $collectionFactory
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param ProductAttributeRepositoryInterface $attributeRepository
+     * @param Product $resourceModel
+     * @param ProductLinks $linkInitializer
+     * @param LinkTypeProvider $linkTypeProvider
+     * @param StoreManagerInterface $storeManager
+     * @param FilterBuilder $filterBuilder
+     * @param ProductAttributeRepositoryInterface $metadataServiceInterface
+     * @param ExtensibleDataObjectConverter $extensibleDataObjectConverter
+     * @param Converter $optionConverter
+     * @param Filesystem $fileSystem
+     * @param ImageContentValidatorInterface $contentValidator
+     * @param ImageContentInterfaceFactory $contentFactory
+     * @param MimeTypeExtensionMap $mimeTypeExtensionMap
+     * @param ImageProcessorInterface $imageProcessor
+     * @param JoinProcessorInterface $extensionAttributesJoinProcessor
+     * @param CategoryRepository $categoryRepository
+     * @param CollectionProcessorInterface|null $collectionProcessor
+     * @param Json|null $serializer
+     * @param int $cacheLimit
+     * @param ReadExtensions|null $readExtensions
+     * @param CategoryLinkManagementInterface|null $linkManagement
+     */
     public function __construct(
         ProductFactory $productFactory,
         Helper $initializationHelper,
         ProductSearchResultsInterfaceFactory $searchResultsFactory,
-        ResourceModel\Product\CollectionFactory $collectionFactory,
+        CollectionFactory $collectionFactory,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         ProductAttributeRepositoryInterface $attributeRepository,
-        ResourceModel\Product $resourceModel,
-        Product\Initialization\Helper\ProductLinks $linkInitializer,
-        Product\LinkTypeProvider $linkTypeProvider,
+        Product $resourceModel,
+        ProductLinks $linkInitializer,
+        LinkTypeProvider $linkTypeProvider,
         StoreManagerInterface $storeManager,
         FilterBuilder $filterBuilder,
         ProductAttributeRepositoryInterface $metadataServiceInterface,
         ExtensibleDataObjectConverter $extensibleDataObjectConverter,
-        Product\Option\Converter $optionConverter,
+        Converter $optionConverter,
         Filesystem $fileSystem,
         ImageContentValidatorInterface $contentValidator,
         ImageContentInterfaceFactory $contentFactory,
         MimeTypeExtensionMap $mimeTypeExtensionMap,
         ImageProcessorInterface $imageProcessor,
         JoinProcessorInterface $extensionAttributesJoinProcessor,
+        CategoryRepository $categoryRepository,
         CollectionProcessorInterface $collectionProcessor = null,
         Json $serializer = null,
         $cacheLimit = 1000,
         ReadExtensions $readExtensions = null,
-        CategoryLinkManagementInterface $linkManagement = null,
-        CategoryRepository $categoryRepository
+        CategoryLinkManagementInterface $linkManagement = null
     ) {
         parent::__construct(
             $productFactory,
